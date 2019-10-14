@@ -1,0 +1,39 @@
+---
+title: "Sacramento real estate data with Mapdeck"
+author: "DanielDavid521"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+```{r echo = FALSE, warning=FALSE, message = FALSE, results=FALSE}
+key = 'pk.eyJ1IjoiZGFuaWVsZGF2aWQ1MjEiLCJhIjoiY2p1MzRuc2JvMGpmaDRkbnpnZ2l2MnpqbSJ9.mHdoPgTXdvHYplxMrsgmhw'
+
+library(tidyverse)
+library(mapdeck)
+
+
+```
+
+
+```{r warning = FALSE, echo = FALSE, message = FALSE}
+
+df <- read_csv('realestate.csv', col_names = TRUE)
+
+df <- sample_n(df, 100)
+
+ mapdeck( token = key, style = mapdeck_style("dark"), pitch = 45 ) %>%
+  add_grid(
+    data = df
+    , lat = 'Latitude'
+    , lon = 'Longitude', cell_size = 2500
+    , elevation_scale = 30
+    , layer_id = "screengrid_layer"
+    , auto_highlight = TRUE)
+  
+
+```
+
